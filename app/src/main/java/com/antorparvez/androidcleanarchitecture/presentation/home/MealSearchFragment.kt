@@ -13,8 +13,10 @@ import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.antorparvez.androidcleanarchitecture.databinding.FragmentMealDetailsBinding
 import com.antorparvez.androidcleanarchitecture.domain.model.Meal
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
+@AndroidEntryPoint
 class MealSearchFragment : Fragment() {
     private lateinit var binding:FragmentMealDetailsBinding
     private var searchList = arrayListOf<Meal>()
@@ -45,7 +47,7 @@ class MealSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+     //   viewModel.getMealSearchList("chicken")
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query.let {
@@ -76,6 +78,7 @@ class MealSearchFragment : Fragment() {
                 it.list?.let {data->
                     Log.d("TAG", "onViewCreated: Success")
                     searchList.addAll(data)
+                    productImageAdapter.notifyDataSetChanged()
                 }
             }
         }
